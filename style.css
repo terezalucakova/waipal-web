@@ -720,6 +720,14 @@ p  { color: var(--muted); }
 .footer-bottom a:hover { color: var(--white); }
 
 /* ─── Responsive ────────────────────────────────────────────────────────── */
+/* 3-column card grids used in pricing / reviews / certificates placeholder sections */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
 @media (max-width: 900px) {
   .nav-links, .nav-cta { display: none; }
   .hamburger { display: flex; }
@@ -727,6 +735,7 @@ p  { color: var(--muted); }
   .cert-grid { grid-template-columns: 1fr; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
   .hero-bg-img, .hero-overlay { display: none; }
+  .cards-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 600px) {
