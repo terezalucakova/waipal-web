@@ -62,11 +62,11 @@ Inter from Google Fonts (weights 400, 500, 600, 700, 800). Loaded via `<link>` p
 - On screens ≤900 px: `.hero-bg-img` and `.hero-overlay` are hidden (`display: none`); shader canvas remains visible
 
 **Subhero** (`ip-ochrana.html`, `sifrovani.html`) – class `.subhero`, padding 4.5rem:
-- `.subhero-bg-img` – `position: absolute; right: -60px; width: 58%; height: 100%; object-fit: cover; object-position: left center`
+- `.subhero-bg-img` – desktop: `position: absolute; right: -60px; width: 58%; height: 100%; object-fit: cover; object-position: left center`
 - `.subhero-overlay` – full-width gradient (same logic)
 - `.subhero-inner` – `position: relative; z-index: 2; max-width: 1180px; margin: 0 auto`
 - `.hero-badge` – pill badge (e.g. "📜 Ochrana duševního vlastnictví") above the h1; no back-link above it
-- **Subhero background images are NOT hidden on mobile** – only main hero hides them at 900 px
+- **On ≤900 px**: subhero image switches to `width: 100%; right: 0; object-position: center center; opacity: 0.35` and overlay becomes a uniform vertical gradient – image is centered and visible on mobile
 
 The gradient must use multiple stops to avoid a visible hard edge – typically 5–6 stops from solid navy through semi-transparent to fully transparent.
 
@@ -107,9 +107,20 @@ All copy is in **Czech**, using **vykání** (formal second person). Key constra
 
 - **3-column grids** (`.why-grid`, `.audiences-grid`) use `grid-template-columns: repeat(3, 1fr)` (not `auto-fit`) to keep consistent 3×N layout
 - **Auto-fit grids** (`.steps-grid`, `.benefits-grid`) use `repeat(auto-fit, minmax(..., 1fr))` – these intentionally reflow
+- **Placeholder/card grids** (pricing, reviews, certificates in `index.html`) use CSS class `.cards-grid` – 3 columns on desktop, 1 column at ≤900px. Never use inline `grid-template-columns` for grids that need to be responsive.
 - Section padding: `3rem 0`; container max-width: `1180px`
 - To reduce spacing between two specific sections, add `style="padding-top: 1rem;"` inline on the second section
 - FAQ accordion: clicking `.faq-question` toggles `.open` on parent `.faq-item`; only one item open at a time
+
+## Placeholder sections (index.html + en/index.html)
+
+Three sections with real-looking placeholder content, each using `.cards-grid`:
+- **#cenik / #pricing** – 3 pricing tier cards (Základní / Pro / Firemní), prices TBD
+- **#recenze / #reviews** – 3 review cards with fictional Czech users and photos from `i.pravatar.cc`:
+  - Jana Nováková (img=47) – freelance grafička
+  - Tomáš Kovář (img=15) – zakladatel startupu
+  - Markéta Horáková (img=32) – architektka
+- **#certifikaty / #certificates** – 3 certification placeholder cards with shield SVG icons
 
 ## Hero shader (`hero-shader.js`)
 
@@ -190,8 +201,21 @@ EN pages use `../` relative paths for all assets: `../style.css`, `../script.js`
 
 ## Responsive breakpoints
 
-- **≤900 px**: nav links/CTA hidden → hamburger shown; services grid, cert grid → single column; footer grid → 2 columns; `.hero-bg-img` and `.hero-overlay` hidden
-- **≤600 px**: hero/subhero CTAs stack vertically; CTA banner buttons stack; footer → single column; `.why-grid` → single column; `.audiences-grid` → 2 columns (not 1)
+**≤900 px:**
+- Nav links/CTA hidden → hamburger shown
+- Services grid, cert grid → single column
+- Footer grid → 2 columns
+- `.hero-bg-img` and `.hero-overlay` hidden (shader canvas stays visible)
+- `.cards-grid` (pricing/reviews/certificates) → single column
+- Subhero bg-image: `width: 100%; right: 0; object-position: center; opacity: 0.35`; overlay switches to uniform vertical gradient
+
+**≤600 px:**
+- `.hero`: `padding: 0; min-height: auto` — removes double padding; `.hero-inner` gets `padding: 2.5rem 1.25rem`
+- `.hero-shader-canvas`: `opacity: 0.45` — shader is less intense on small screens
+- Hero/subhero CTAs stack vertically; CTA banner buttons stack with `width: 100%` and `align-items: stretch` (prevents long labels from overflowing)
+- Footer → single column; `.why-grid` → single column; `.audiences-grid` → 2 columns (not 1)
+
+**Rule:** Never use `grid-template-columns: repeat(N, 1fr)` as an inline style — it cannot be overridden by media queries. Always use a CSS class (e.g. `.cards-grid`, `.services-grid`).
 
 ## SVG icon style (všechny stránky)
 
