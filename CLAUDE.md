@@ -4,22 +4,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-Static marketing website for **Waipal** – a Czech-language service offering two products:
+Static marketing website for **Waipal** – a bilingual (Czech + English) service offering two products:
 1. **Ochrana duševního vlastnictví** – blockchain certificate proving document existence/ownership
 2. **Šifrování dokumentů** – encrypted document storage
 
-The site links out to the live app at `https://waipal.com` for login and registration. No build step, no framework, no dependencies – open `index.html` directly in a browser.
+The site links out to the live app at `https://waipal.com` for login and registration. No build step, no framework, no dependencies – open `index.html` directly in a browser. English pages live in the `en/` subdirectory.
 
 ## File structure
 
 | File | Purpose |
 |---|---|
-| `index.html` | Main landing page with hero, both services, why/audiences/benefits/FAQ sections |
-| `ip-ochrana.html` | Subpage – IP protection detail + registration CTA |
-| `sifrovani.html` | Subpage – document encryption detail + registration CTA |
-| `style.css` | Shared styles for all three pages |
-| `script.js` | Shared JS: mobile hamburger menu, FAQ accordion, sticky nav shadow |
-| `hero-image.png` | Main hero background image (right side, index.html) |
+| `index.html` | Main landing page (CZ) – hero, both services, why/audiences/benefits/FAQ sections |
+| `ip-ochrana.html` | Subpage (CZ) – IP protection detail + registration CTA |
+| `sifrovani.html` | Subpage (CZ) – document encryption detail + registration CTA |
+| `en/index.html` | Main landing page (EN) – full English translation of index.html |
+| `en/ip-protection.html` | Subpage (EN) – English translation of ip-ochrana.html |
+| `en/encryption.html` | Subpage (EN) – English translation of sifrovani.html |
+| `style.css` | Shared styles for all pages (CZ + EN) |
+| `script.js` | Shared JS: mobile hamburger menu, FAQ accordion, sticky nav shadow, language dropdown |
+| `hero-shader.js` | WebGL/Three.js animated grid shader for index.html hero background |
+| `hero-image.png` | Hero background image layered on top of shader (right side, index.html) |
 | `ip-hero.png` | Hero background image for ip-ochrana.html (dark blue, copyright/creative icons) |
 | `sifrovani-hero.png` | Hero background image for sifrovani.html (dark blue, document + padlock) |
 | `service-ip.png` | IP protection illustration (available as asset) |
@@ -50,11 +54,12 @@ Inter from Google Fonts (weights 400, 500, 600, 700, 800). Loaded via `<link>` p
 
 ## Hero / subhero architecture
 
-**Main hero** (`index.html`) – class `.hero`, min-height 585px, flex center:
-- `.hero-bg-img` – `position: absolute; right: 0; width: 65%; height: 100%; object-fit: cover`
-- `.hero-overlay` – full-width gradient `#0F1A3C solid → transparent`
-- `.hero-inner` – `max-width: 1180px; padding: 5rem 1.5rem 4.5rem; z-index: 2`
-- On screens ≤900 px: `.hero-bg-img` and `.hero-overlay` are hidden (`display: none`)
+**Main hero** (`index.html`) – class `.hero`, min-height 585px, flex center. Z-index stack (bottom to top):
+1. `.hero-shader-canvas` (z-index 0) – WebGL canvas filling the full hero; animated navy+blue grid
+2. `.hero-bg-img` (z-index 0, later in DOM = above shader) – `position: absolute; right: 0; width: 65%; opacity: 0.65; mix-blend-mode: luminosity` – image blends with shader beneath it
+3. `.hero-overlay` (z-index 1) – full-width gradient `#0F1A3C solid → transparent`, ensures left-side text readability
+4. `.hero-inner` (z-index 2) – `max-width: 1180px; padding: 5rem 1.5rem 4.5rem`
+- On screens ≤900 px: `.hero-bg-img` and `.hero-overlay` are hidden (`display: none`); shader canvas remains visible
 
 **Subhero** (`ip-ochrana.html`, `sifrovani.html`) – class `.subhero`, padding 4.5rem:
 - `.subhero-bg-img` – `position: absolute; right: -60px; width: 58%; height: 100%; object-fit: cover; object-position: left center`
@@ -106,10 +111,61 @@ All copy is in **Czech**, using **vykání** (formal second person). Key constra
 - To reduce spacing between two specific sections, add `style="padding-top: 1rem;"` inline on the second section
 - FAQ accordion: clicking `.faq-question` toggles `.open` on parent `.faq-item`; only one item open at a time
 
+## Hero shader (`hero-shader.js`)
+
+Animated WebGL background for `index.html` hero only. Three.js loaded from CDN before the shader script:
+```html
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="hero-shader.js"></script>
+<script src="script.js"></script>
+```
+
+Key GLSL parameters (all in `hero-shader.js`):
+- `iTime * 0.38` – overall animation speed
+- `warp * 0.22` + `smoothstep(0.65, ...)` – mouse warp intensity and radius
+- `sin(t * 2.0) * 0.42` – grid brightness pulse amplitude
+- Energy pulse speed: `t * 7.0` / `t * 5.0`
+- Mouse glow: `smoothstep(0.22, ...)` radius, `* 1.1` intensity
+- Colors: navy base `vec3(0.059, 0.102, 0.235)` (#0F1A3C), grid `vec3(0.106, 0.310, 0.847)` (#1B4FD8), pulses/glow `vec3(0.4, 0.65, 1.0)`
+
+The shader does **not** use React, TypeScript or Tailwind – it is plain vanilla JS with Three.js global.
+
+## Language switcher
+
+All 6 pages have a flag dropdown in the nav. HTML pattern (CZ pages):
+```html
+<div class="lang-switch">
+  <button class="lang-btn" aria-haspopup="true" aria-expanded="false">
+    <span class="lang-flag">🇨🇿</span>
+    <svg class="lang-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="lang-menu">
+    <span class="lang-option lang-option-active"><span class="lang-flag">🇨🇿</span> CS</span>
+    <a href="en/index.html" class="lang-option"><span class="lang-flag">🇬🇧</span> EN</a>
+  </div>
+</div>
+```
+For EN pages: swap flag to 🇬🇧, active span = EN, CZ link = `../index.html` (or `../ip-ochrana.html` / `../sifrovani.html`).
+
+CSS classes: `.lang-switch` (relative wrapper), `.lang-btn` (trigger button), `.lang-menu` (hidden by default, `display:block` when `.lang-switch.open`), `.lang-option` / `.lang-option-active`, `.lang-flag`, `.lang-chevron` (rotates 180° when open).
+
+JS in `script.js`: click on `.lang-btn` toggles `.open` on `.lang-switch`; click anywhere else closes it.
+
+## English pages (`en/` subdirectory)
+
+| CZ page | EN equivalent | Lang switcher target |
+|---|---|---|
+| `index.html` | `en/index.html` | `en/index.html` |
+| `ip-ochrana.html` | `en/ip-protection.html` | `en/ip-protection.html` |
+| `sifrovani.html` | `en/encryption.html` | `en/encryption.html` |
+
+EN pages use `../` relative paths for all assets: `../style.css`, `../script.js`, `../favicon.png`, `../hero-image.png`, etc. Internal EN links point to `ip-protection.html` and `encryption.html` (no `en/` prefix needed within the subdirectory).
+
 ## Navigation patterns
 
 - `index.html` nav links are anchor-only: `href="#sluzby"`, `href="#proc"`, etc.
 - Subpage nav links prefix with filename: `href="index.html#sluzby"`, `href="index.html#proc"`, etc.
+- EN subpage nav links prefix with `index.html`: `href="index.html#services"`, etc.
 
 ## Subpage components
 
@@ -137,19 +193,34 @@ All copy is in **Czech**, using **vykání** (formal second person). Key constra
 - **≤900 px**: nav links/CTA hidden → hamburger shown; services grid, cert grid → single column; footer grid → 2 columns; `.hero-bg-img` and `.hero-overlay` hidden
 - **≤600 px**: hero/subhero CTAs stack vertically; CTA banner buttons stack; footer → single column; `.why-grid` → single column; `.audiences-grid` → 2 columns (not 1)
 
-## SVG icon style (sifrovani.html)
+## SVG icon style (všechny stránky)
 
-The why-grid and audiences-grid sections on `sifrovani.html` use inline SVG icons instead of emojis. Pattern for each icon container:
+Všechny sekce `.why-grid` a `.audiences-grid` na všech třech stránkách používají inline SVG ikonky místo emoji. Žádné emoji ikonky nezůstaly.
 
+**Vzor pro `.why-item-icon`** (why-grid, 52×52 px):
 ```html
 <div class="why-item-icon" style="background:var(--blue-light);border-radius:10px;width:52px;height:52px;display:flex;align-items:center;justify-content:center;color:var(--blue);flex-shrink:0;">
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">…</svg>
 </div>
 ```
 
-Audience cards use the same approach with `width/height:60px` and `margin:0 auto .75rem` to keep the centered card layout.
+**Vzor pro `.audience-icon`** (audiences-grid, 60×60 px, centrované):
+```html
+<div class="audience-icon" style="background:var(--blue-light);border-radius:10px;width:60px;height:60px;display:flex;align-items:center;justify-content:center;color:var(--blue);margin:0 auto .75rem;">
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">…</svg>
+</div>
+```
 
-When adding new icons to these sections, maintain: `stroke-width="1.8"`, `fill="none"`, `stroke="currentColor"`, `stroke-linecap="round"`, `stroke-linejoin="round"`.
+Při přidávání nových ikonek zachovat: `stroke-width="1.8"`, `fill="none"`, `stroke="currentColor"`, `stroke-linecap="round"`, `stroke-linejoin="round"`.
+
+## Deploy
+
+- **Git remote**: https://github.com/terezalucakova/waipal-web
+- **Hosting**: Vercel (účet přihlášen přes Google)
+- **Auto-deploy**: každý push na větev `main` automaticky nasadí novou verzi
+- Žádný build krok – Vercel servíruje statické soubory přímo z kořene repozitáře
+
+Workflow pro změny: upravit soubory → `git add` → `git commit` → `git push` → Vercel deployuje automaticky.
 
 ## Company / contact
 

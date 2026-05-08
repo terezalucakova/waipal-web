@@ -26,6 +26,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // ── Language dropdown ────────────────────────────────────────────────────
+  const langSwitch = document.querySelector('.lang-switch');
+  if (langSwitch) {
+    const langBtn = langSwitch.querySelector('.lang-btn');
+    langBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpen = langSwitch.classList.toggle('open');
+      langBtn.setAttribute('aria-expanded', isOpen);
+    });
+    document.addEventListener('click', () => {
+      langSwitch.classList.remove('open');
+      langBtn.setAttribute('aria-expanded', 'false');
+    });
+  }
+
   // ── Sticky nav shadow ────────────────────────────────────────────────────
   const nav = document.querySelector('.nav');
   if (nav) {
