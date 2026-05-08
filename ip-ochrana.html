@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ochrana duševního vlastnictví – Waipal</title>
+  <meta name="description" content="Pomocí blockchainového certifikátu doložte, že Váš dokument, návrh nebo dílo existovalo v konkrétní podobě a čase. Snadno, rychle a bez složité administrativy." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ── Navigation ──────────────────────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="https://waipal.com/img/logos/waipal.png" alt="Waipal" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#sluzby">Služby</a></li>
+      <li><a href="index.html#proc">Proč Waipal</a></li>
+      <li><a href="index.html#pro-koho">Pro koho</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="index.html#kontakt">Kontakt</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="https://waipal.com/login" class="btn btn-outline">Přihlásit se</a>
+      <a href="https://waipal.com/register" class="btn btn-primary">Registrace</a>
+    </div>
+    <button class="hamburger" aria-label="Otevřít menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu">
+    <a href="index.html#sluzby">Služby</a>
+    <a href="index.html#proc">Proč Waipal</a>
+    <a href="index.html#pro-koho">Pro koho</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="index.html#kontakt">Kontakt</a>
+    <a href="https://waipal.com/login" class="btn btn-outline">Přihlásit se</a>
+    <a href="https://waipal.com/register" class="btn btn-primary">Registrace</a>
+  </div>
+</nav>
+
+<!-- ── Subhero ──────────────────────────────────────────────────────────── -->
+<section class="subhero">
+  <img src="ip-hero.png" alt="" class="subhero-bg-img" aria-hidden="true" />
+  <div class="subhero-overlay"></div>
+<div class="subhero-inner">
+    <div class="hero-badge" style="margin-bottom:1.5rem;">📜 Ochrana duševního vlastnictví</div>
+    <h1>Doložte, že Váš nápad nebo dílo existovalo jako první</h1>
+    <p class="subhero-sub">
+      Waipal vytvoří digitální otisk Vašeho souboru a zapíše ho na blockchain.
+      Získáte certifikát, který může sloužit jako podpůrný důkaz o existenci
+      a vlastnictví dokumentu v konkrétním čase.
+    </p>
+    <div class="subhero-ctas">
+      <a href="https://waipal.com/register" class="btn btn-white btn-lg">
+        Vytvořit certifikát zdarma <span class="btn-icon">→</span>
+      </a>
+      <a href="https://waipal.com/verify" class="btn btn-white btn-lg">
+        Ověřit certifikát
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Co to řeší ───────────────────────────────────────────────────────── -->
+<section class="section" id="proc">
+  <div class="container">
+    <span class="section-label">Proč to potřebujete</span>
+    <h2 class="section-title" style="max-width:640px;">Váš nápad vznikl dřív, než ho ostatní viděli. Umíte to doložit?</h2>
+    <p style="max-width:640px;margin-bottom:2rem;">
+      Autorská práva existují od okamžiku vzniku díla – ale prokázat, kdy přesně
+      Vaše dílo existovalo, může být klíčové při sporu, obchodním jednání nebo
+      při sdílení návrhu s klientem či investorem.
+    </p>
+
+    <div class="highlight-box">
+      <p>
+        <strong>Waipal Vám pomáhá vytvořit digitální stopu:</strong> nezpochybnitelný záznam o tom,
+        že konkrétní soubor existoval v určité podobě a v určitém čase.
+        Záznam je uložen na blockchainu – technologii, která zajišťuje,
+        že ho nelze zpětně upravit ani smazat.
+      </p>
+    </div>
+
+    <div class="why-grid" style="margin-top:2rem;">
+      <div class="why-item">
+        <div class="why-item-icon">🖊️</div>
+        <div>
+          <h4>Autorské texty a díla</h4>
+          <p>Romány, scénáře, články, básně, výzkumné práce nebo jiné písemné výstupy.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-item-icon">🎨</div>
+        <div>
+          <h4>Grafické návrhy a vizuály</h4>
+          <p>Loga, webdesigny, ilustrace, fotografické výstupy nebo animace.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-item-icon">🏗️</div>
+        <div>
+          <h4>Architektura a projektová dokumentace</h4>
+          <p>Plány, studie, vizualizace a technické výkresy.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-item-icon">💡</div>
+        <div>
+          <h4>Obchodní nápady a know-how</h4>
+          <p>Koncepty, podnikatelské plány, marketingové strategie nebo firemní metodiky.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-item-icon">🔬</div>
+        <div>
+          <h4>Výzkum a odborné výstupy</h4>
+          <p>Studie, vědecké práce, analýzy nebo odborné posudky.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-item-icon">📋</div>
+        <div>
+          <h4>Smlouvy a obchodní dokumenty</h4>
+          <p>Důležité dokumenty, u nichž je klíčové prokázat jejich podobu k danému datu.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Jak to funguje ───────────────────────────────────────────────────── -->
+<section class="section why" id="proces">
+  <div class="container">
+    <div class="center">
+      <span class="section-label">Proces</span>
+      <h2 class="section-title">Jak ochrana duševního vlastnictví funguje</h2>
+      <p class="section-sub">Celý proces trvá jen pár minut. Žádná složitá administrativa.</p>
+    </div>
+    <div class="steps-grid" style="margin-top:2.5rem;">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h4>Nahrajete soubor</h4>
+        <p>Vyberte dokument, fotografii, návrh nebo jiný soubor, který chcete chránit. Formát není omezený.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h4>Waipal vytvoří digitální otisk</h4>
+        <p>Systém vygeneruje jedinečný digitální otisk (hash) Vašeho souboru. Tento otisk reprezentuje přesnou podobu dokumentu.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h4>Otisk je zapsán na blockchain</h4>
+        <p>Digitální otisk se zapíše na blockchain jako neměnný časový záznam. Tento krok nelze zpětně smazat ani upravit.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <h4>Získáte certifikát</h4>
+        <p>Obdržíte certifikát s informacemi potřebnými k ověření – datum, čas, digitální otisk a blockchainový identifikátor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Certifikát – co obsahuje ─────────────────────────────────────────── -->
+<section class="section cert" id="certifikat" style="padding-top:1rem;">
+  <div class="container">
+    <div class="cert-grid">
+      <div>
+        <span class="section-label">Výstup služby</span>
+        <h2 class="section-title">Co certifikát obsahuje a k čemu slouží</h2>
+        <p style="margin-bottom:1.5rem;">
+          Certifikát je digitální potvrzení, že konkrétní soubor existoval v určité podobě
+          a v určitém čase. Lze ho kdykoliv ověřit a předložit jako podpůrný důkaz.
+        </p>
+        <div class="cert-items">
+          <div class="cert-item">
+            <div class="cert-item-dot"></div>
+            <p><strong>Datum a čas vzniku záznamu</strong> – přesné časové razítko zápisu na blockchain</p>
+          </div>
+          <div class="cert-item">
+            <div class="cert-item-dot"></div>
+            <p><strong>Digitální otisk souboru</strong> – jedinečný hash, který identifikuje přesnou podobu dokumentu</p>
+          </div>
+          <div class="cert-item">
+            <div class="cert-item-dot"></div>
+            <p><strong>Identifikátor blockchainového záznamu</strong> – odkaz na konkrétní záznam v blockchainu</p>
+          </div>
+          <div class="cert-item">
+            <div class="cert-item-dot"></div>
+            <p><strong>Informace o souboru</strong> – název nebo popis dokumentu zadaný při vytváření</p>
+          </div>
+          <div class="cert-item">
+            <div class="cert-item-dot"></div>
+            <p><strong>Možnost ověření</strong> – certifikát lze kdykoli znovu ověřit a potvrdit jeho pravost</p>
+          </div>
+        </div>
+        <div class="highlight-box" style="margin-top:1.5rem;">
+          <p>Certifikát může sloužit jako <strong>podpůrný důkaz</strong> při dokazování existence,
+          podoby nebo vlastnictví dokumentu. Není náhradou za právní ochranu,
+          ale pomáhá doložit klíčové skutečnosti.</p>
+        </div>
+      </div>
+      <div class="cert-visual">
+        <div class="cert-header">
+          <div class="cert-icon">📜</div>
+          <div>
+            <h4>Certifikát Waipal</h4>
+            <span>Certifikát ochrany duševního vlastnictví</span>
+          </div>
+        </div>
+        <div class="cert-row">
+          <span class="cert-row-label">Datum vytvoření</span>
+          <span class="cert-row-value">08.05.2024 14:32:07</span>
+        </div>
+        <div class="cert-row">
+          <span class="cert-row-label">Název souboru</span>
+          <span class="cert-row-value">muj-dokument.pdf</span>
+        </div>
+        <div class="cert-row">
+          <span class="cert-row-label">Digitální otisk</span>
+          <span class="cert-row-value">a3f8b2c1d4e9...</span>
+        </div>
+        <div class="cert-row">
+          <span class="cert-row-label">Blockchain TX</span>
+          <span class="cert-row-value">0x7f3a9c2b1...</span>
+        </div>
+        <div class="cert-row">
+          <span class="cert-row-label">Stav</span>
+          <span class="cert-row-value" style="color:var(--green);font-family:inherit;font-size:.9rem;">✓ Ověřeno</span>
+        </div>
+        <div style="margin-top:1.5rem;padding:1rem;background:var(--blue-light);border-radius:var(--radius-sm);text-align:center;">
+          <p style="font-size:.82rem;color:var(--blue);font-weight:600;">Záznam na blockchainu je neměnný a ověřitelný kdykoliv v budoucnu</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Pro koho ─────────────────────────────────────────────────────────── -->
+<section class="section audiences" id="pro-koho">
+  <div class="container">
+    <div class="center">
+      <span class="section-label">Pro koho</span>
+      <h2 class="section-title">Pro koho je ochrana duševního vlastnictví vhodná</h2>
+    </div>
+    <div class="audiences-grid">
+      <div class="audience-card">
+        <div class="audience-icon">🎨</div>
+        <h4>Kreativci a autoři</h4>
+        <p>Texty, fotografie, hudba, videa, autorská díla</p>
+      </div>
+      <div class="audience-card">
+        <div class="audience-icon">💡</div>
+        <h4>Designéři</h4>
+        <p>Loga, webdesigny, grafické návrhy, koncepty</p>
+      </div>
+      <div class="audience-card">
+        <div class="audience-icon">📣</div>
+        <h4>Marketéři</h4>
+        <p>Slogany, kampaně, kreativní koncepty</p>
+      </div>
+      <div class="audience-card">
+        <div class="audience-icon">🏛️</div>
+        <h4>Architekti</h4>
+        <p>Projekty, návrhy, studie, vizualizace</p>
+      </div>
+      <div class="audience-card">
+        <div class="audience-icon">💼</div>
+        <h4>Podnikatelé</h4>
+        <p>Obchodní nápady, know-how, plány</p>
+      </div>
+      <div class="audience-card">
+        <div class="audience-icon">🔬</div>
+        <h4>Výzkumníci</h4>
+        <p>Studie, metodiky, odborné výstupy</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ──────────────────────────────────────────────────────────────── -->
+<section class="section why" id="faq">
+  <div class="container">
+    <div class="center">
+      <span class="section-label">FAQ</span>
+      <h2 class="section-title">Časté otázky k ochraně duševního vlastnictví</h2>
+    </div>
+    <div class="faq-list" style="max-width:780px;margin-inline:auto;margin-top:2.5rem;">
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Chrání certifikát autorská práva automaticky?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-answer">
+          <p>Certifikát automaticky nevytváří právní nárok na autorské právo. Autorská práva vznikají ze zákona při vytvoření díla. Certifikát slouží jako podpůrný důkaz o existenci díla v daném čase a podobě, což může být velmi cenné při dokazování autorství.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Co se stane, když soubor upravím?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-answer">
+          <p>Každá úprava souboru změní jeho digitální otisk. Původní certifikát se vztahuje výhradně k původní verzi dokumentu. Pro novou verzi je potřeba vytvořit nový certifikát.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Jak mohu certifikát ověřit?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-answer">
+          <p>Certifikát lze ověřit na stránce Waipal zadáním identifikátoru nebo nahráním původního souboru. Systém porovná digitální otisk a potvrdí, zda odpovídá záznamu na blockchainu.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Jaké soubory mohu chránit?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-answer">
+          <p>Prakticky jakýkoliv digitální soubor: dokumenty (PDF, Word), obrázky (JPG, PNG, SVG), videa, zvukové soubory, archívy ZIP a další. Obsah souboru se na blockchain neukládá – pouze jeho digitální otisk.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Registrace ───────────────────────────────────────────────────────── -->
+<section class="section" id="registrace">
+  <div class="container" style="max-width:720px;">
+    <div class="register-box">
+      <h3>Připraveni chránit své dílo?</h3>
+      <p>
+        Vytvořte si účet a získejte první certifikát. Celý proces trvá jen pár minut.
+        Cena certifikátu začíná od 79 Kč.
+      </p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;">
+        <a href="https://waipal.com/register" class="btn btn-primary btn-lg">
+          Vytvořit účet a začít <span class="btn-icon">→</span>
+        </a>
+        <a href="https://waipal.com/verify" class="btn btn-primary btn-lg">
+          Ověřit certifikát
+        </a>
+      </div>
+      <p style="margin-top:1.25rem;font-size:.85rem;color:var(--muted);">
+        Máte dotaz? Napište nám na <a href="mailto:info@waipal.com" style="color:var(--blue);font-weight:600;">info@waipal.com</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ───────────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="https://waipal.com/img/logos/waipal_white_1.png" alt="Waipal" />
+      <p>Digitální ochrana dokumentů a duševního vlastnictví pro firmy i jednotlivce.</p>
+      <p style="margin-top:.75rem;font-size:.8rem;">FLEXI CREDIT s.r.o. · Zelená 1387/14, 735 35 Horní Suchá</p>
+    </div>
+    <div class="footer-col">
+      <h5>Služby</h5>
+      <ul>
+        <li><a href="ip-ochrana.html">Ochrana duševního vlastnictví</a></li>
+        <li><a href="sifrovani.html">Šifrování dokumentů</a></li>
+        <li><a href="https://waipal.com/verify">Ověřit certifikát</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Společnost</h5>
+      <ul>
+        <li><a href="index.html#faq">FAQ</a></li>
+        <li><a href="mailto:info@waipal.com">info@waipal.com</a></li>
+        <li><a href="https://waipal.com/privacy-policy">Zásady ochrany dat</a></li>
+        <li><a href="https://waipal.com/terms">Obchodní podmínky</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 Waipal · FLEXI CREDIT s.r.o.</span>
+    <div style="display:flex;gap:1.25rem;">
+      <a href="https://waipal.com/privacy-policy">Ochrana osobních údajů</a>
+      <a href="https://waipal.com/terms">Podmínky použití</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
