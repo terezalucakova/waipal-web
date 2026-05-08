@@ -760,7 +760,9 @@ p  { color: var(--muted); }
   .hero-ctas { flex-direction: column; }
   .hero-ctas .btn-lg { min-width: 0; width: 100%; }
   .subhero-ctas { flex-direction: column; }
-  .cta-banner-btns { flex-direction: column; align-items: center; }
+  .cta-banner { padding: 3.5rem 1.25rem; }
+  .cta-banner-btns { flex-direction: column; align-items: stretch; }
+  .cta-banner-btns .btn { width: 100%; justify-content: center; text-align: center; }
   .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
   .register-box { padding: 2rem 1.5rem; }
   .why-grid { grid-template-columns: 1fr; }
