@@ -739,7 +739,8 @@ p  { color: var(--muted); }
 }
 
 @media (max-width: 600px) {
-  .hero { padding: 4rem 1.25rem 3rem; }
+  .hero { padding: 0; min-height: auto; }
+  .hero-inner { padding: 2.5rem 1.25rem 2.5rem; }
   .subhero { padding: 3.5rem 1.25rem 3rem; }
   .section { padding: 3.5rem 0; }
   .hero-ctas { flex-direction: column; }
