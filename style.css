@@ -446,6 +446,8 @@ p  { color: var(--muted); }
 .audience-card p  { font-size: .82rem; }
 
 /* ─── Benefits ──────────────────────────────────────────────────────────── */
+.benefits-section { background: var(--blue-light); }
+
 .benefits-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -456,23 +458,29 @@ p  { color: var(--muted); }
   display: flex;
   gap: 1rem;
   align-items: flex-start;
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow);
+  transition: box-shadow var(--transition);
 }
+.benefit-item:hover { box-shadow: var(--shadow-md); }
 .benefit-check {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background: var(--blue-light);
-  color: var(--blue);
+  background: var(--blue);
+  color: var(--white);
   font-size: .85rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  margin-top: .15rem;
+  margin-top: .1rem;
 }
 .benefit-item h4 { margin-bottom: .25rem; font-size: .95rem; }
-.benefit-item p  { font-size: .88rem; }
+.benefit-item p  { font-size: .88rem; color: var(--muted); }
 
 /* ─── FAQ ───────────────────────────────────────────────────────────────── */
 .faq-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: .75rem; }
