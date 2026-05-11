@@ -53,30 +53,82 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!localStorage.getItem('cookieConsent')) {
     const isEn = location.pathname.includes('/en/');
     const policyHref = isEn ? '../ochrana-osobnich-udaju.html' : 'ochrana-osobnich-udaju.html';
-    const banner = document.createElement('div');
-    banner.className = 'cookie-banner';
-    banner.innerHTML = `
-      <p class="cookie-banner-text">
-        ${isEn
-          ? `We use cookies to improve your experience. By clicking "Accept all" you agree to the use of all cookies. <a href="${policyHref}">Privacy policy</a>`
-          : `Používáme cookies pro zlepšení Vašeho zážitku. Kliknutím na „Přijmout vše" souhlasíte s použitím všech cookies. <a href="${policyHref}">Ochrana osobních údajů</a>`
-        }
-      </p>
-      <div class="cookie-banner-btns">
-        <button class="btn btn-white-outline" id="cookieNecessary">${isEn ? 'Necessary only' : 'Pouze nezbytné'}</button>
-        <button class="btn btn-white" id="cookieAcceptAll">${isEn ? 'Accept all' : 'Přijmout vše'}</button>
+
+    const overlay = document.createElement('div');
+    overlay.className = 'cookie-overlay';
+
+    const modal = document.createElement('div');
+    modal.className = 'cookie-modal';
+    const t = isEn ? {
+      title: 'We use cookies',
+      desc: 'To provide the best user experience, we use cookies on the WAIPAL website. Some are necessary for the site to function correctly; others help us improve our services or display relevant content.',
+      subtitle: 'Choose which cookies you allow:',
+      types: [
+        { id: 'necessary', label: 'Technical (necessary)', desc: 'Ensure the correct functioning of the website. Cannot be disabled.', locked: true },
+        { id: 'analytics', label: 'Analytical', desc: 'Help us understand how users use our website (e.g. via Google Analytics).' },
+        { id: 'marketing', label: 'Marketing', desc: 'Used to personalise advertising and track your preferences across websites.' },
+      ],
+      note: `You can change your consent at any time in your browser settings or in the website footer. <a href="${policyHref}">Privacy policy</a>`,
+      save: 'Save settings', acceptAll: 'Accept all',
+    } : {
+      title: 'Používáme cookies',
+      desc: 'Abychom Vám poskytli co nejlepší uživatelský zážitek, používáme na našem webu WAIPAL soubory cookies. Některé jsou nezbytné pro správné fungování webu, jiné nám pomáhají zlepšovat naše služby nebo zobrazovat relevantní obsah.',
+      subtitle: 'Vyberte, které cookies povolujete:',
+      types: [
+        { id: 'necessary', label: 'Technické (nezbytné)', desc: 'Zajišťují správné fungování webu. Nelze vypnout.', locked: true },
+        { id: 'analytics', label: 'Analytické', desc: 'Pomáhají nám porozumět, jak uživatelé náš web používají (např. pomocí Google Analytics).' },
+        { id: 'marketing', label: 'Marketingové', desc: 'Slouží k personalizaci reklamy a sledování Vašich preferencí napříč weby.' },
+      ],
+      note: `Svůj souhlas můžete kdykoliv změnit v nastavení prohlížeče nebo v zápatí webu. <a href="${policyHref}">Ochrana osobních údajů</a>`,
+      save: 'Uložit nastavení', acceptAll: 'Přijmout vše',
+    };
+
+    modal.innerHTML = `
+      <h3 class="cookie-modal-title">${t.title}</h3>
+      <p class="cookie-modal-desc">${t.desc}</p>
+      <p class="cookie-modal-subtitle">${t.subtitle}</p>
+      <ul class="cookie-types">
+        ${t.types.map(type => `
+          <li>
+            <div class="cookie-type-row">
+              <div class="cookie-type-info">
+                <span class="cookie-type-label">${type.label}</span>
+                <span class="cookie-type-desc">${type.desc}</span>
+              </div>
+              <label class="cookie-toggle ${type.locked ? 'cookie-toggle--locked' : ''}">
+                <input type="checkbox" id="cookie-${type.id}" ${type.locked ? 'checked disabled' : ''} />
+                <span class="cookie-toggle-track"></span>
+              </label>
+            </div>
+          </li>
+        `).join('')}
+      </ul>
+      <p class="cookie-modal-note">${t.note}</p>
+      <div class="cookie-modal-btns">
+        <button class="btn btn-outline" id="cookieSave">${t.save}</button>
+        <button class="btn btn-primary" id="cookieAcceptAll">${t.acceptAll}</button>
       </div>
     `;
-    document.body.appendChild(banner);
-    requestAnimationFrame(() => banner.classList.add('visible'));
+
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add('visible'));
 
     const dismiss = (value) => {
-      localStorage.setItem('cookieConsent', value);
-      banner.classList.remove('visible');
-      setTimeout(() => banner.remove(), 400);
+      localStorage.setItem('cookieConsent', JSON.stringify(value));
+      overlay.classList.remove('visible');
+      setTimeout(() => overlay.remove(), 350);
     };
-    banner.querySelector('#cookieAcceptAll').addEventListener('click', () => dismiss('all'));
-    banner.querySelector('#cookieNecessary').addEventListener('click', () => dismiss('necessary'));
+    modal.querySelector('#cookieAcceptAll').addEventListener('click', () =>
+      dismiss({ necessary: true, analytics: true, marketing: true })
+    );
+    modal.querySelector('#cookieSave').addEventListener('click', () => {
+      dismiss({
+        necessary: true,
+        analytics: modal.querySelector('#cookie-analytics').checked,
+        marketing: modal.querySelector('#cookie-marketing').checked,
+      });
+    });
   }
 
 });

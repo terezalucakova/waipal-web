@@ -704,8 +704,8 @@ p  { color: var(--muted); }
   max-width: 1180px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 2.5rem;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 2rem;
   padding-bottom: 2.5rem;
   border-bottom: 1px solid rgba(255,255,255,.1);
 }
@@ -777,38 +777,115 @@ p  { color: var(--muted); }
   .audiences-grid { grid-template-columns: 1fr 1fr; }
 }
 
-/* ─── Cookie Banner ─────────────────────────────────────────────────────── */
-.cookie-banner {
+/* ─── Cookie Modal ──────────────────────────────────────────────────────── */
+.cookie-overlay {
   position: fixed;
-  bottom: 0; left: 0; right: 0;
+  inset: 0;
   z-index: 9999;
-  background: var(--navy);
-  border-top: 1px solid rgba(255,255,255,.1);
-  padding: 1.25rem 1.5rem;
+  background: rgba(15,26,60,.55);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.cookie-overlay.visible { opacity: 1; }
+.cookie-modal {
+  background: var(--white);
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 2rem 2rem 1.75rem;
+  max-width: 580px;
+  width: 100%;
+  transform: translateY(40px);
+  transition: transform .35s ease;
+}
+.cookie-overlay.visible .cookie-modal { transform: translateY(0); }
+.cookie-modal-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: .85rem;
+}
+.cookie-modal-desc {
+  font-size: .9rem;
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: .85rem;
+}
+.cookie-modal-subtitle {
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: .5rem;
+}
+.cookie-types {
+  list-style: none;
+  padding: 0;
+  margin-bottom: .85rem;
+  border-top: 1px solid var(--border);
+}
+.cookie-types li {
+  padding: .7rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.cookie-type-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
-  box-shadow: 0 -4px 24px rgba(0,0,0,.2);
-  transform: translateY(100%);
-  transition: transform .35s ease;
+  gap: 1rem;
 }
-.cookie-banner.visible { transform: translateY(0); }
-.cookie-banner-text {
-  color: rgba(255,255,255,.8);
-  font-size: .88rem;
+.cookie-type-info {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+}
+.cookie-type-label {
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.cookie-type-desc {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.cookie-toggle { position: relative; flex-shrink: 0; cursor: pointer; }
+.cookie-toggle input { position: absolute; opacity: 0; width: 0; height: 0; }
+.cookie-toggle-track {
+  display: block;
+  width: 44px; height: 24px;
+  background: var(--border);
+  border-radius: 12px;
+  transition: background .2s ease;
+}
+.cookie-toggle input:checked + .cookie-toggle-track { background: var(--blue); }
+.cookie-toggle-track::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 18px; height: 18px;
+  background: white;
+  border-radius: 50%;
+  transition: transform .2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+.cookie-toggle input:checked + .cookie-toggle-track::after { transform: translateX(20px); }
+.cookie-toggle--locked { opacity: .5; cursor: not-allowed; }
+.cookie-modal-note {
+  font-size: .82rem;
+  color: var(--muted);
   line-height: 1.55;
-  flex: 1;
+  margin-bottom: 1.25rem;
 }
-.cookie-banner-text a { color: rgba(255,255,255,.6); text-decoration: underline; }
-.cookie-banner-text a:hover { color: var(--white); }
-.cookie-banner-btns {
+.cookie-modal-note a { color: var(--blue); }
+.cookie-modal-btns {
   display: flex;
   gap: .75rem;
-  flex-shrink: 0;
+  justify-content: flex-end;
 }
-@media (max-width: 700px) {
-  .cookie-banner { flex-direction: column; align-items: stretch; text-align: center; }
-  .cookie-banner-btns { flex-direction: column; }
-  .cookie-banner-btns .btn { width: 100%; justify-content: center; }
+@media (max-width: 500px) {
+  .cookie-modal { padding: 1.5rem 1.25rem; border-radius: var(--radius); }
+  .cookie-modal-btns { flex-direction: column; }
+  .cookie-modal-btns .btn { width: 100%; justify-content: center; text-align: center; }
 }
