@@ -31,6 +31,9 @@ The site links out to the live app at `https://waipal.com` for login and registr
 | `favicon.png` | Favicon used by all pages (`<link rel="icon" type="image/png">`) |
 | `favicon.ico` | Fallback favicon (empty file, `favicon.png` takes precedence) |
 | `kontext-waipal.md` | Full project brief in Czech – source of truth for copy, tone, structure |
+| `sitemap.xml` | XML sitemap with all 6 URLs + hreflang pairs; submit to Google Search Console |
+| `robots.txt` | Allows all crawlers; references sitemap URL |
+| `og-image.png` | **TODO – not yet created.** OG image (1200×630 px) for social sharing previews. Until created, og:image tags point to this path but return 404. |
 
 ## Design system (CSS variables)
 
@@ -107,6 +110,7 @@ All copy is in **Czech**, using **vykání** (formal second person). Key constra
 
 - **3-column grids** (`.why-grid`, `.audiences-grid`) use `grid-template-columns: repeat(3, 1fr)` (not `auto-fit`) to keep consistent 3×N layout
 - **Auto-fit grids** (`.steps-grid`, `.benefits-grid`) use `repeat(auto-fit, minmax(..., 1fr))` – these intentionally reflow
+- **Benefits section** (`index.html` + `en/index.html`) uses class `.benefits-section` on the `<section>` for the `--blue-light` background. Each `.benefit-item` is a white card with padding, shadow, and hover. `.benefit-check` is a solid `--blue` filled circle with white tick.
 - **Placeholder/card grids** (pricing, reviews, certificates in `index.html`) use CSS class `.cards-grid` – 3 columns on desktop, 1 column at ≤900px. Never use inline `grid-template-columns` for grids that need to be responsive.
 - Section padding: `3rem 0`; container max-width: `1180px`
 - To reduce spacing between two specific sections, add `style="padding-top: 1rem;"` inline on the second section
@@ -236,6 +240,47 @@ Všechny sekce `.why-grid` a `.audiences-grid` na všech třech stránkách pou�
 ```
 
 Při přidávání nových ikonek zachovat: `stroke-width="1.8"`, `fill="none"`, `stroke="currentColor"`, `stroke-linecap="round"`, `stroke-linejoin="round"`.
+
+## SEO
+
+All 6 pages have a full SEO `<head>` block inserted after `<link rel="stylesheet">`. Pattern (adjust canonical/hreflang/og:url/og:locale per page):
+
+```html
+<!-- SEO -->
+<link rel="canonical" href="https://waipal.com/" />
+<link rel="alternate" hreflang="cs" href="https://waipal.com/" />
+<link rel="alternate" hreflang="en" href="https://waipal.com/en/" />
+<link rel="alternate" hreflang="x-default" href="https://waipal.com/" />
+<link rel="apple-touch-icon" href="/favicon.png" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0F1A3C" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Waipal" />
+<meta property="og:locale" content="cs_CZ" />          <!-- en_US for EN pages -->
+<meta property="og:title" content="…" />
+<meta property="og:description" content="…" />
+<meta property="og:url" content="https://waipal.com/" />
+<meta property="og:image" content="https://waipal.com/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="…" />
+<meta name="twitter:description" content="…" />
+<meta name="twitter:image" content="https://waipal.com/og-image.png" />
+```
+
+**JSON-LD** (only on `index.html` + `en/index.html`):
+- `Organization` schema – name, url, logo, email, legalName, address
+- `FAQPage` schema – all 6 FAQ questions/answers (enables rich results in Google)
+
+**hreflang pairs:**
+| CZ page | EN page |
+|---|---|
+| `https://waipal.com/` | `https://waipal.com/en/` |
+| `https://waipal.com/ip-ochrana` | `https://waipal.com/en/ip-protection` |
+| `https://waipal.com/sifrovani` | `https://waipal.com/en/encryption` |
+
+`x-default` always points to the CZ URL. `sitemap.xml` includes all 6 URLs with hreflang pairs.
+
+**After any new page is added:** update `sitemap.xml`, add the full SEO block to `<head>`, and add the correct hreflang pair on both language versions.
 
 ## Deploy
 

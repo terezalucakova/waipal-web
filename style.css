@@ -76,7 +76,7 @@ p  { color: var(--muted); }
 .btn-white-outline { background: transparent; color: var(--white); border-color: rgba(255,255,255,.6); }
 .btn-white-outline:hover { background: rgba(255,255,255,.1); }
 .btn-lg { padding: 1rem 2.25rem; font-size: 1.1rem; }
-.btn-icon { font-size: 1.1em; }
+.btn-icon { font-size: 1.1em; display: inline-flex; align-items: center; vertical-align: middle; }
 
 /* ─── Navigation ────────────────────────────────────────────────────────── */
 .nav {
