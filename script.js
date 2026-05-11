@@ -49,4 +49,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   }
 
+  // ── Cookie banner ────────────────────────────────────────────────────────
+  if (!localStorage.getItem('cookieConsent')) {
+    const isEn = location.pathname.includes('/en/');
+    const policyHref = isEn ? '../ochrana-osobnich-udaju.html' : 'ochrana-osobnich-udaju.html';
+    const banner = document.createElement('div');
+    banner.className = 'cookie-banner';
+    banner.innerHTML = `
+      <p class="cookie-banner-text">
+        ${isEn
+          ? `We use cookies to improve your experience. By clicking "Accept all" you agree to the use of all cookies. <a href="${policyHref}">Privacy policy</a>`
+          : `Používáme cookies pro zlepšení Vašeho zážitku. Kliknutím na „Přijmout vše" souhlasíte s použitím všech cookies. <a href="${policyHref}">Ochrana osobních údajů</a>`
+        }
+      </p>
+      <div class="cookie-banner-btns">
+        <button class="btn btn-white-outline" id="cookieNecessary">${isEn ? 'Necessary only' : 'Pouze nezbytné'}</button>
+        <button class="btn btn-white" id="cookieAcceptAll">${isEn ? 'Accept all' : 'Přijmout vše'}</button>
+      </div>
+    `;
+    document.body.appendChild(banner);
+    requestAnimationFrame(() => banner.classList.add('visible'));
+
+    const dismiss = (value) => {
+      localStorage.setItem('cookieConsent', value);
+      banner.classList.remove('visible');
+      setTimeout(() => banner.remove(), 400);
+    };
+    banner.querySelector('#cookieAcceptAll').addEventListener('click', () => dismiss('all'));
+    banner.querySelector('#cookieNecessary').addEventListener('click', () => dismiss('necessary'));
+  }
+
 });
