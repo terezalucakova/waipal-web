@@ -21,7 +21,7 @@ The site links out to the live app at `https://waipal.com` for login and registr
 | `en/ip-protection.html` | Subpage (EN) – English translation of ip-ochrana.html |
 | `en/encryption.html` | Subpage (EN) – English translation of sifrovani.html |
 | `style.css` | Shared styles for all pages (CZ + EN) |
-| `script.js` | Shared JS: mobile hamburger menu, FAQ accordion, sticky nav shadow, language dropdown |
+| `script.js` | Shared JS: mobile hamburger menu, FAQ accordion, sticky nav shadow, language dropdown, cookie consent modal |
 | `hero-shader.js` | WebGL/Three.js animated grid shader for index.html hero background |
 | `hero-image.png` | Hero background image layered on top of shader (right side, index.html) |
 | `ip-hero.png` | Hero background image for ip-ochrana.html (dark blue, copyright/creative icons) |
@@ -31,6 +31,8 @@ The site links out to the live app at `https://waipal.com` for login and registr
 | `favicon.png` | Favicon used by all pages (`<link rel="icon" type="image/png">`) |
 | `favicon.ico` | Fallback favicon (empty file, `favicon.png` takes precedence) |
 | `kontext-waipal.md` | Full project brief in Czech – source of truth for copy, tone, structure |
+| `podminky.html` | Obchodní podmínky (VOP) – 12 numbered articles, same nav/footer as subpages |
+| `ochrana-osobnich-udaju.html` | Ochrana osobních údajů (GDPR) – rights grid cards, info box, same nav/footer |
 | `sitemap.xml` | XML sitemap with all 6 URLs + hreflang pairs; submit to Google Search Console |
 | `robots.txt` | Allows all crawlers; references sitemap URL |
 | `og-image.png` | **TODO – not yet created.** OG image (1200×630 px) for social sharing previews. Until created, og:image tags point to this path but return 404. |
@@ -68,7 +70,7 @@ Inter from Google Fonts (weights 400, 500, 600, 700, 800). Loaded via `<link>` p
 - `.subhero-bg-img` – desktop: `position: absolute; right: -60px; width: 58%; height: 100%; object-fit: cover; object-position: left center`
 - `.subhero-overlay` – full-width gradient (same logic)
 - `.subhero-inner` – `position: relative; z-index: 2; max-width: 1180px; margin: 0 auto`
-- `.hero-badge` – pill badge (e.g. "📜 Ochrana duševního vlastnictví") above the h1; no back-link above it
+- `.hero-badge` – pill badge with inline SVG icon above the h1 (no emoji); SVG uses `vertical-align:middle;margin-right:6px;`; no back-link above it
 - **On ≤900 px**: subhero image switches to `width: 100%; right: 0; object-position: center center; opacity: 0.35` and overlay becomes a uniform vertical gradient – image is centered and visible on mobile
 
 The gradient must use multiple stops to avoid a visible hard edge – typically 5–6 stops from solid navy through semi-transparent to fully transparent.
@@ -223,7 +225,7 @@ EN pages use `../` relative paths for all assets: `../style.css`, `../script.js`
 
 ## SVG icon style (všechny stránky)
 
-Všechny sekce `.why-grid` a `.audiences-grid` na všech třech stránkách používají inline SVG ikonky místo emoji. Žádné emoji ikonky nezůstaly.
+**Žádné emoji ikonky na webu nepoužíváme.** Všude jsou inline SVG – why-grid, audiences-grid, hero/CTA tlačítka, subhero badges, cert-icon v certifikátových showcase. Při přidávání zachovat: `stroke-width="1.8"`, `fill="none"`, `stroke="currentColor"`, `stroke-linecap="round"`, `stroke-linejoin="round"`.
 
 **Vzor pro `.why-item-icon`** (why-grid, 52×52 px):
 ```html
@@ -239,7 +241,28 @@ Všechny sekce `.why-grid` a `.audiences-grid` na všech třech stránkách pou�
 </div>
 ```
 
-Při přidávání nových ikonek zachovat: `stroke-width="1.8"`, `fill="none"`, `stroke="currentColor"`, `stroke-linecap="round"`, `stroke-linejoin="round"`.
+**Vzor pro `.btn-icon`** (tlačítka v hero a CTA banneru, 18×18 px):
+```html
+<span class="btn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">…</svg></span>
+```
+`.btn-icon` má `display:inline-flex; align-items:center; vertical-align:middle;` – barva se dědí z textu tlačítka.
+
+**Vzor pro `.cert-icon`** (certifikátový showcase, 32×32 px, modrá barva):
+```html
+<div class="cert-icon" style="color:var(--blue);display:flex;align-items:center;justify-content:center;">
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">…</svg>
+</div>
+```
+
+**Vzor pro `.hero-badge` ikonku** (subhero badge, 15×15 px):
+```html
+<svg width="15" height="15" … style="vertical-align:middle;margin-right:6px;">…</svg>
+```
+
+Standardní ikonky projektu:
+- **Štít** (IP ochrana): `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`
+- **Zámek** (šifrování): `<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>`
+- **Obálka** (kontakt): `<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>`
 
 ## SEO
 
@@ -281,6 +304,58 @@ All 6 pages have a full SEO `<head>` block inserted after `<link rel="stylesheet
 `x-default` always points to the CZ URL. `sitemap.xml` includes all 6 URLs with hreflang pairs.
 
 **After any new page is added:** update `sitemap.xml`, add the full SEO block to `<head>`, and add the correct hreflang pair on both language versions.
+
+## Legal pages (`podminky.html`, `ochrana-osobnich-udaju.html`)
+
+Both pages use page-scoped `<style>` blocks (not in `style.css`) with classes:
+- `.legal-hero` – navy header, centred title + subtitle
+- `.legal-content` – `max-width: 820px`, `margin: 0 auto`
+- `.legal-effective` – blue pill badge with effective date
+- `.legal-content h2` – section heading with `border-bottom: 2px solid var(--blue-light)`
+- `.legal-info-box` – `--blue-light` background box (used for company contact info)
+
+`ochrana-osobnich-udaju.html` also has:
+- `.rights-grid` – `repeat(auto-fit, minmax(220px, 1fr))` grid for GDPR rights cards
+- `.rights-item` – card with blue SVG icon + text
+
+Footer links on these pages point to local files (`podminky.html`, `ochrana-osobnich-udaju.html`), not to `waipal.com/terms` or `waipal.com/privacy-policy`.
+
+## Footer structure
+
+Footer grid: `grid-template-columns: 2fr 1fr 1fr 1fr` (4 columns):
+1. `.footer-brand` – logo, tagline, company address
+2. **Služby** – IP ochrana, Šifrování, Ověřit certifikát
+3. **Společnost** – FAQ, Kontakt (#kontakt), info@waipal.com
+4. **Právní** – Ochrana osobních údajů, Obchodní podmínky
+
+Footer bottom bar has: copyright left; Ochrana osobních údajů + Obchodní podmínky right.
+
+At ≤900 px footer collapses to 2 columns; at ≤600 px to 1 column.
+
+**Never put the privacy/terms links only in the "Společnost" column** – they belong in the dedicated "Právní" column.
+
+## Cookie consent modal
+
+Injected by `script.js` on first visit (checks `localStorage.getItem('cookieConsent')`). Stores result as JSON: `{ necessary: true, analytics: bool, marketing: bool }`.
+
+CSS classes in `style.css`:
+- `.cookie-overlay` – fixed full-screen semi-transparent backdrop, `align-items: flex-end`
+- `.cookie-modal` – white panel, `border-radius` top corners only, slides up from bottom
+- `.cookie-type-row` – flex row with `.cookie-type-info` (label + desc) and `.cookie-toggle`
+- `.cookie-toggle` – custom checkbox toggle; locked (necessary) variant: `.cookie-toggle--locked`
+- `.cookie-toggle-track` – the track; `::after` pseudo-element is the thumb
+
+Three cookie types: **Technické** (always on, disabled), **Analytické** (toggle), **Marketingové** (toggle).
+Buttons: „Uložit nastavení" (saves individual selection) + „Přijmout vše" (accepts all).
+Language is auto-detected from `location.pathname.includes('/en/')`.
+
+## FAQ
+
+`index.html` has 16 FAQ items total (6 original + 10 added):
+- Original 6: blockchainový certifikát, ukládání na blockchain, právní důkaz, firmy, šifrování, cena
+- Added 10: co je blockchain, jaký blockchain, jak chránit obsah, bezpečnost nahrávání, šifrovací klíč, obsah certifikátu, ukončení Waipalu, přístup k obsahu, soudní řízení, ochrana dat na blockchainu
+
+JSON-LD `FAQPage` schema in `<head>` needs to be kept in sync when FAQ items change.
 
 ## Deploy
 
